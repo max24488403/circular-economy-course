@@ -1,25 +1,36 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+/*
+  DESIGN: Terra Narrativa — 大地敘事
+  Home: Main landing page assembling all sections
+  Wabi-Sabi meets Nordic Minimalism
+  Color: Deep charcoal + Ivory + Forest Green + Terracotta
+  Typography: Cormorant Garamond (display) + Noto Sans TC (body)
+*/
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import PainPointsSection from "@/components/PainPointsSection";
+import MythsSection from "@/components/MythsSection";
+import TrilogySection from "@/components/TrilogySection";
+import ModulesSection from "@/components/ModulesSection";
+import ComparisonSection from "@/components/ComparisonSection";
+import InstructorsSection from "@/components/InstructorsSection";
+import PricingSection from "@/components/PricingSection";
+import CTASection from "@/components/CTASection";
+import Footer from "@/components/Footer";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
- */
 export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
-
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
+    <div className="min-h-screen">
+      <Navbar />
+      <HeroSection />
+      <PainPointsSection />
+      <MythsSection />
+      <TrilogySection />
+      <ModulesSection />
+      <ComparisonSection />
+      <InstructorsSection />
+      <PricingSection />
+      <CTASection />
+      <Footer />
     </div>
   );
 }
