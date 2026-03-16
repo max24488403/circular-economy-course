@@ -1,142 +1,121 @@
 /*
-  DESIGN: Terra Narrativa — 大地敘事
-  Myths: Ivory bg, alternating left-right layout with comparison tables
+  DESIGN: Clean Presentation Style
+  MythsSection: White background, structured myth-busting cards
 */
-import { MYTHS, CDN } from "@/lib/constants";
+import { MYTHS } from "@/lib/constants";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { ArrowRight, Lightbulb, X, Check } from "lucide-react";
-
-function AnimatedCard({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const { ref, isVisible } = useScrollAnimation(0.1);
-  return (
-    <div
-      ref={ref}
-      className="transition-all duration-1000 ease-out"
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(40px)",
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
+import { XCircle, CheckCircle, ArrowRight } from "lucide-react";
 
 export default function MythsSection() {
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+
   return (
-    <section id="myths" className="py-24 lg:py-32 bg-background relative overflow-hidden">
+    <section id="myths" className="py-20 bg-white">
       <div className="container">
-        {/* Section header */}
-        <AnimatedCard>
-          <div className="max-w-4xl mx-auto text-center mb-20">
-            <span className="font-body text-sm tracking-[0.3em] text-terra-terracotta uppercase mb-6 block">
-              單元二
-            </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-terra-charcoal leading-tight mb-8">
-              循環經濟<br />
-              <span className="text-terra-forest">不是您想的那樣</span>
-            </h2>
-            <p className="font-body text-lg text-terra-charcoal/50 leading-relaxed max-w-2xl mx-auto">
-              破除三大迷思，看見三大商機——每一個迷思的破除，都對應著一個全新的商業價值創造途徑。
-            </p>
-          </div>
-        </AnimatedCard>
+        {/* Section title */}
+        <div ref={titleRef} className={`mb-14 transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+          <p className="text-xs tracking-[0.2em] text-pres-green uppercase mb-3">單元二</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-pres-dark leading-tight">
+            循環經濟不是您想的那樣！
+          </h2>
+          <p className="text-base text-pres-text-secondary mt-3 max-w-2xl">
+            破除三大迷思，對應三大「超越」揭示商機。每一個迷思的破除，都對應著一個全新的商機視野。
+          </p>
+          <div className="w-12 h-0.5 bg-pres-green mt-6" />
+        </div>
 
-        {/* Linear vs Circular image */}
-        <AnimatedCard>
-          <div className="max-w-5xl mx-auto mb-24 rounded-sm overflow-hidden shadow-2xl shadow-terra-charcoal/10">
-            <img
-              src={CDN.linearVsCircular}
-              alt="線性經濟 vs 循環經濟"
-              className="w-full h-auto"
-            />
-          </div>
-        </AnimatedCard>
-
-        {/* Myths */}
-        <div className="space-y-24 lg:space-y-32">
-          {MYTHS.map((myth, i) => (
-            <AnimatedCard key={myth.number}>
-              <div className={`grid lg:grid-cols-2 gap-12 lg:gap-16 items-start ${
-                i % 2 === 1 ? "lg:direction-rtl" : ""
-              }`}>
-                {/* Left: Myth info */}
-                <div className={i % 2 === 1 ? "lg:order-2" : ""}>
-                  {/* Number & myth */}
-                  <div className="flex items-start gap-4 mb-6">
-                    <span className="font-display text-6xl lg:text-7xl font-bold text-terra-charcoal/[0.06] leading-none">
-                      {myth.number}
-                    </span>
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <X size={16} className="text-red-400" />
-                        <span className="font-body text-sm text-red-400 tracking-wider">迷思</span>
-                      </div>
-                      <h3 className="font-display text-2xl lg:text-3xl font-bold text-terra-charcoal">
-                        「{myth.myth}」
-                      </h3>
-                    </div>
-                  </div>
-
-                  {/* Truth */}
-                  <div className="flex items-center gap-2 mb-4 pl-2">
-                    <ArrowRight size={16} className="text-terra-forest" />
-                    <span className="font-body text-base font-medium text-terra-forest tracking-wider">
-                      {myth.truth}
-                    </span>
-                  </div>
-
-                  <p className="font-body text-base text-terra-charcoal/60 leading-relaxed mb-8 pl-2">
-                    {myth.description}
-                  </p>
-
-                  {/* Opportunity */}
-                  <div className="p-6 bg-terra-forest/[0.04] border-l-2 border-terra-forest/30 rounded-r-sm">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Lightbulb size={16} className="text-terra-amber" />
-                      <span className="font-body text-sm font-medium text-terra-amber tracking-wider">商機揭示</span>
-                    </div>
-                    <p className="font-body text-sm text-terra-charcoal/70 leading-relaxed">
-                      {myth.opportunity}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right: Comparison table */}
-                <div className={i % 2 === 1 ? "lg:order-1" : ""}>
-                  <div className="bg-terra-charcoal rounded-sm p-8 lg:p-10">
-                    <h4 className="font-display text-xl font-semibold text-white mb-8">
-                      思維對照
-                    </h4>
-                    <div className="space-y-6">
-                      {myth.comparison.map((item, j) => (
-                        <div key={j} className="space-y-3">
-                          <div className="flex items-start gap-3">
-                            <X size={14} className="text-red-400/60 mt-1 shrink-0" />
-                            <p className="font-body text-sm text-white/40 leading-relaxed line-through decoration-white/10">
-                              {item.old}
-                            </p>
-                          </div>
-                          <div className="flex items-start gap-3">
-                            <Check size={14} className="text-terra-forest-light mt-1 shrink-0" />
-                            <p className="font-body text-sm text-white/80 leading-relaxed">
-                              {item.new}
-                            </p>
-                          </div>
-                          {j < myth.comparison.length - 1 && (
-                            <div className="w-full h-px bg-white/[0.06] mt-3" />
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+        {/* Three super-transcendences intro */}
+        <div className="mb-12 p-6 bg-pres-light-gray border border-pres-border">
+          <h3 className="text-base font-bold text-pres-dark mb-3">循環經濟：三大「超越」</h3>
+          <p className="text-sm text-pres-text leading-relaxed mb-4">
+            循環經濟不是多回收，而是三個發展「超越」的觀念轉移。這不是某個產業的優化，而是整體經濟邏輯從線性走向循環的轉型。
+          </p>
+          <div className="grid sm:grid-cols-3 gap-4">
+            {MYTHS.map((myth) => (
+              <div key={myth.number} className="p-4 bg-white border border-pres-border">
+                <p className="text-xs text-pres-text-secondary mb-1">超越 {myth.number}</p>
+                <p className="text-sm font-bold text-pres-dark">{myth.truth}</p>
+                <p className="text-xs text-pres-green mt-1">{myth.englishTruth}</p>
               </div>
-            </AnimatedCard>
+            ))}
+          </div>
+        </div>
+
+        {/* Myth cards */}
+        <div className="space-y-8">
+          {MYTHS.map((myth, i) => (
+            <MythCard key={myth.number} myth={myth} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function MythCard({
+  myth,
+  index,
+}: {
+  myth: (typeof MYTHS)[number];
+  index: number;
+}) {
+  const { ref, isVisible } = useScrollAnimation();
+
+  return (
+    <div
+      ref={ref}
+      className={`border border-pres-border bg-white transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+      style={{ transitionDelay: `${index * 100}ms` }}
+    >
+      {/* Myth header */}
+      <div className="p-6 border-b border-pres-border">
+        <div className="flex items-start gap-4">
+          <div className="shrink-0 w-10 h-10 flex items-center justify-center bg-pres-terracotta-bg text-pres-terracotta">
+            <XCircle size={20} />
+          </div>
+          <div>
+            <p className="text-xs text-pres-text-secondary mb-1">迷思 {myth.number}</p>
+            <h3 className="text-lg font-bold text-pres-dark">「{myth.myth}」</h3>
+          </div>
+        </div>
+        <p className="text-sm text-pres-text leading-relaxed mt-3 ml-14">{myth.description}</p>
+      </div>
+
+      {/* Truth */}
+      <div className="p-6 border-b border-pres-border bg-pres-green-bg">
+        <div className="flex items-start gap-4">
+          <div className="shrink-0 w-10 h-10 flex items-center justify-center bg-white text-pres-green">
+            <CheckCircle size={20} />
+          </div>
+          <div>
+            <p className="text-xs text-pres-green mb-1">觀念釋疑</p>
+            <h4 className="text-base font-bold text-pres-dark">{myth.truth}</h4>
+            <p className="text-sm text-pres-text leading-relaxed mt-2">{myth.opportunity}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Comparison table */}
+      <div className="p-6">
+        <p className="text-xs font-semibold text-pres-text-secondary mb-3 uppercase tracking-wider">思維對比</p>
+        <div className="space-y-3">
+          {myth.comparison.map((c, j) => (
+            <div key={j} className="flex items-start gap-3 text-sm">
+              <div className="flex-1 p-3 bg-pres-light-gray text-pres-text-secondary">
+                <p className="text-xs text-pres-terracotta font-medium mb-1">舊思維</p>
+                {c.old}
+              </div>
+              <ArrowRight size={16} className="shrink-0 mt-4 text-pres-green" />
+              <div className="flex-1 p-3 bg-pres-green-bg text-pres-text">
+                <p className="text-xs text-pres-green font-medium mb-1">新思維</p>
+                {c.new}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }

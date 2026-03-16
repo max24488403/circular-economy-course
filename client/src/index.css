@@ -4,10 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  DESIGN: Terra Narrativa — 大地敘事
-  Wabi-Sabi meets Nordic Minimalism
-  Color: Deep charcoal + Ivory + Forest Green + Terracotta
-  Typography: Cormorant Garamond (display) + Noto Sans TC (body)
+  DESIGN: 簡報風格 — Clean Presentation Style
+  純淨淡底色、無背景圖、段落式排版
+  Color: 白色/極淡灰底 + 深灰文字 + 森林綠強調色
+  Typography: Noto Sans TC (全站統一)
 */
 
 @theme inline {
@@ -48,56 +48,57 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Terra Narrativa custom colors */
-  --color-terra-charcoal: oklch(0.22 0.005 60);
-  --color-terra-ivory: oklch(0.96 0.008 80);
-  --color-terra-forest: oklch(0.42 0.08 160);
-  --color-terra-forest-light: oklch(0.52 0.08 160);
-  --color-terra-terracotta: oklch(0.62 0.14 45);
-  --color-terra-terracotta-light: oklch(0.72 0.12 45);
-  --color-terra-amber: oklch(0.68 0.12 75);
-  --color-terra-warm-gray: oklch(0.88 0.005 60);
-  --color-terra-dark: oklch(0.18 0.005 60);
+  /* Presentation-style colors */
+  --color-pres-green: oklch(0.40 0.10 155);
+  --color-pres-green-light: oklch(0.50 0.08 155);
+  --color-pres-green-bg: oklch(0.96 0.02 155);
+  --color-pres-amber: oklch(0.65 0.12 75);
+  --color-pres-amber-bg: oklch(0.96 0.02 75);
+  --color-pres-terracotta: oklch(0.58 0.12 40);
+  --color-pres-terracotta-bg: oklch(0.96 0.02 40);
+  --color-pres-dark: oklch(0.20 0.005 60);
+  --color-pres-text: oklch(0.25 0.005 60);
+  --color-pres-text-secondary: oklch(0.45 0.005 60);
+  --color-pres-light-gray: oklch(0.97 0.002 60);
+  --color-pres-border: oklch(0.90 0.005 60);
 
-  --font-display: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
   --font-body: 'Noto Sans TC', system-ui, sans-serif;
-  --font-quote: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
 }
 
 :root {
-  --radius: 0.5rem;
-  --background: oklch(0.96 0.008 80);
-  --foreground: oklch(0.22 0.005 60);
-  --card: oklch(0.98 0.005 80);
-  --card-foreground: oklch(0.22 0.005 60);
-  --popover: oklch(0.98 0.005 80);
-  --popover-foreground: oklch(0.22 0.005 60);
-  --primary: oklch(0.42 0.08 160);
-  --primary-foreground: oklch(0.98 0.005 80);
-  --secondary: oklch(0.92 0.008 80);
-  --secondary-foreground: oklch(0.32 0.005 60);
-  --muted: oklch(0.92 0.005 80);
-  --muted-foreground: oklch(0.52 0.01 60);
-  --accent: oklch(0.62 0.14 45);
-  --accent-foreground: oklch(0.98 0.005 80);
+  --radius: 0.375rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.20 0.005 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.20 0.005 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.20 0.005 60);
+  --primary: oklch(0.40 0.10 155);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.97 0.002 60);
+  --secondary-foreground: oklch(0.30 0.005 60);
+  --muted: oklch(0.97 0.002 60);
+  --muted-foreground: oklch(0.45 0.005 60);
+  --accent: oklch(0.40 0.10 155);
+  --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.88 0.008 80);
-  --input: oklch(0.88 0.008 80);
-  --ring: oklch(0.42 0.08 160);
-  --chart-1: oklch(0.42 0.08 160);
-  --chart-2: oklch(0.62 0.14 45);
-  --chart-3: oklch(0.68 0.12 75);
-  --chart-4: oklch(0.52 0.08 160);
-  --chart-5: oklch(0.72 0.12 45);
-  --sidebar: oklch(0.96 0.008 80);
-  --sidebar-foreground: oklch(0.22 0.005 60);
-  --sidebar-accent: oklch(0.92 0.005 80);
-  --sidebar-accent-foreground: oklch(0.22 0.005 60);
-  --sidebar-border: oklch(0.88 0.008 80);
-  --sidebar-ring: oklch(0.42 0.08 160);
-  --sidebar-primary: oklch(0.42 0.08 160);
-  --sidebar-primary-foreground: oklch(0.98 0.005 80);
+  --border: oklch(0.92 0.005 60);
+  --input: oklch(0.92 0.005 60);
+  --ring: oklch(0.40 0.10 155);
+  --chart-1: oklch(0.40 0.10 155);
+  --chart-2: oklch(0.58 0.12 40);
+  --chart-3: oklch(0.65 0.12 75);
+  --chart-4: oklch(0.50 0.08 155);
+  --chart-5: oklch(0.70 0.10 40);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.20 0.005 60);
+  --sidebar-accent: oklch(0.97 0.002 60);
+  --sidebar-accent-foreground: oklch(0.20 0.005 60);
+  --sidebar-border: oklch(0.92 0.005 60);
+  --sidebar-ring: oklch(0.40 0.10 155);
+  --sidebar-primary: oklch(0.40 0.10 155);
+  --sidebar-primary-foreground: oklch(1 0 0);
 }
 
 @layer base {
@@ -109,6 +110,7 @@
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.8;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -123,7 +125,8 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
+    font-family: var(--font-body);
+    font-weight: 700;
   }
 }
 
@@ -152,71 +155,30 @@
     .container {
       padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px;
+      max-width: 960px;
     }
-  }
-
-  /* Terra Narrativa typography */
-  .font-display {
-    font-family: var(--font-display);
-  }
-
-  .font-body {
-    font-family: var(--font-body);
-  }
-
-  .font-quote {
-    font-family: var(--font-quote);
-  }
-
-  /* Grain texture overlay */
-  .grain-overlay::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* Section divider wave */
-  .section-divider {
-    position: relative;
-  }
-
-  .section-divider::before {
-    content: '';
-    position: absolute;
-    top: -1px;
-    left: 0;
-    right: 0;
-    height: 80px;
-    background: inherit;
-    clip-path: ellipse(60% 100% at 50% 100%);
   }
 }
 
-/* Custom scrollbar */
+/* Clean scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: oklch(0.92 0.005 80);
+  background: oklch(0.97 0.002 60);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: oklch(0.42 0.08 160 / 0.3);
+  background: oklch(0.40 0.10 155 / 0.25);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(0.42 0.08 160 / 0.5);
+  background: oklch(0.40 0.10 155 / 0.45);
 }
 
-/* Selection color */
 ::selection {
-  background: oklch(0.42 0.08 160 / 0.2);
-  color: oklch(0.18 0.005 60);
+  background: oklch(0.40 0.10 155 / 0.15);
+  color: oklch(0.15 0.005 60);
 }

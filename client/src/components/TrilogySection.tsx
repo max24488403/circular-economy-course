@@ -1,158 +1,118 @@
 /*
-  DESIGN: Terra Narrativa — 大地敘事
-  Trilogy: Dark immersive section with the three-part framework
+  DESIGN: Clean Presentation Style
+  TrilogySection: Light gray background, clean numbered cards for the trilogy
 */
-import { TRILOGY, CDN } from "@/lib/constants";
+import { TRILOGY } from "@/lib/constants";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
-function AnimatedCard({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const { ref, isVisible } = useScrollAnimation(0.1);
-  return (
-    <div
-      ref={ref}
-      className="transition-all duration-1000 ease-out"
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(40px)",
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-const colorMap: Record<string, { border: string; text: string; bg: string; glow: string }> = {
-  forest: {
-    border: "border-terra-forest/30",
-    text: "text-terra-forest-light",
-    bg: "bg-terra-forest/10",
-    glow: "shadow-terra-forest/10",
-  },
-  amber: {
-    border: "border-terra-amber/30",
-    text: "text-terra-amber",
-    bg: "bg-terra-amber/10",
-    glow: "shadow-terra-amber/10",
-  },
-  terracotta: {
-    border: "border-terra-terracotta/30",
-    text: "text-terra-terracotta-light",
-    bg: "bg-terra-terracotta/10",
-    glow: "shadow-terra-terracotta/10",
-  },
-};
+const colorAccents = [
+  { border: "border-pres-green", bg: "bg-pres-green-bg", text: "text-pres-green" },
+  { border: "border-pres-amber", bg: "bg-pres-amber-bg", text: "text-pres-amber" },
+  { border: "border-pres-terracotta", bg: "bg-pres-terracotta-bg", text: "text-pres-terracotta" },
+];
 
 export default function TrilogySection() {
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+
   return (
-    <section id="trilogy" className="relative py-24 lg:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0">
-        <img
-          src={CDN.trilogyBg}
-          alt=""
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-terra-charcoal/80" />
-      </div>
-      <div className="absolute inset-0 grain-overlay" />
+    <section id="trilogy" className="py-20 bg-pres-light-gray">
+      <div className="container">
+        {/* Section title */}
+        <div ref={titleRef} className={`mb-14 transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+          <p className="text-xs tracking-[0.2em] text-pres-green uppercase mb-3">單元三</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-pres-dark leading-tight">
+            循環三部曲：從好主意到好生意
+          </h2>
+          <p className="text-base text-pres-text-secondary mt-3 max-w-2xl">
+            循環三部曲的核心，是把發展順序倒過來：不是從好生意出發，而是從循環好主意出發。
+          </p>
+          <div className="w-12 h-0.5 bg-pres-green mt-6" />
+        </div>
 
-      <div className="relative z-10 container">
-        {/* Section header */}
-        <AnimatedCard>
-          <div className="max-w-4xl mx-auto text-center mb-8">
-            <span className="font-body text-sm tracking-[0.3em] text-terra-terracotta-light uppercase mb-6 block">
-              單元三
-            </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-white leading-tight mb-8">
-              循環三部曲<br />
-              <span className="text-terra-terracotta-light">Circular Trilogy</span>
-            </h2>
-            <p className="font-body text-lg text-white/50 leading-relaxed max-w-3xl mx-auto mb-4">
-              把發展順序倒過來——不是從「好生意」出發，而是從「循環好主意」出發。
-              當「好主意」結合「好治理」，自然會產生真正的「好生意」。
-            </p>
-          </div>
-        </AnimatedCard>
-
-        {/* Formula */}
-        <AnimatedCard delay={200}>
-          <div className="flex items-center justify-center gap-3 sm:gap-6 mb-20 flex-wrap">
-            <span className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-terra-forest-light">
-              好主意
-            </span>
-            <span className="font-display text-2xl sm:text-3xl text-white/20">+</span>
-            <span className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-terra-amber">
-              好治理
-            </span>
-            <span className="font-display text-2xl sm:text-3xl text-white/20">=</span>
-            <span className="font-display text-xl sm:text-2xl lg:text-3xl font-bold text-terra-terracotta-light">
-              好生意
-            </span>
-          </div>
-        </AnimatedCard>
+        {/* Flow indicator */}
+        <div className="flex items-center justify-center gap-3 sm:gap-4 mb-12 flex-wrap">
+          {TRILOGY.map((item, i) => (
+            <div key={item.number} className="flex items-center gap-3 sm:gap-4">
+              <div className={`px-4 py-2 text-sm font-bold ${colorAccents[i].bg} ${colorAccents[i].text} border ${colorAccents[i].border}`}>
+                {item.subtitle}
+              </div>
+              {i < TRILOGY.length - 1 && (
+                <span className="text-pres-text-secondary text-lg">&rarr;</span>
+              )}
+            </div>
+          ))}
+        </div>
 
         {/* Trilogy cards */}
-        <div className="grid lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {TRILOGY.map((item, i) => {
-            const colors = colorMap[item.color];
-            return (
-              <AnimatedCard key={item.number} delay={i * 200}>
-                <div className={`relative p-8 lg:p-10 border ${colors.border} rounded-sm bg-white/[0.02] backdrop-blur-sm hover:bg-white/[0.05] transition-all duration-700 hover:shadow-2xl ${colors.glow} h-full`}>
-                  {/* Number */}
-                  <div className={`font-display text-sm tracking-[0.3em] ${colors.text} mb-6`}>
-                    第{item.number}部曲
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="font-display text-2xl lg:text-3xl font-bold text-white mb-2">
-                    {item.title}
-                  </h3>
-                  <p className={`font-body text-sm ${colors.text} tracking-wider mb-6`}>
-                    {item.subtitle}
-                  </p>
-
-                  {/* Description */}
-                  <p className="font-body text-base text-white/55 leading-relaxed mb-8">
-                    {item.description}
-                  </p>
-
-                  {/* Traits */}
-                  <div className="flex flex-wrap gap-2 mb-8">
-                    {item.traits.map((trait) => (
-                      <span
-                        key={trait}
-                        className={`px-3 py-1 text-xs font-body tracking-wider ${colors.bg} ${colors.text} rounded-sm`}
-                      >
-                        {trait}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <div className="border-t border-white/[0.06] pt-6">
-                    <p className="font-quote italic text-sm text-white/35 leading-relaxed">
-                      「{item.quote}」
-                    </p>
-                  </div>
-                </div>
-              </AnimatedCard>
-            );
-          })}
+        <div className="space-y-6">
+          {TRILOGY.map((item, i) => (
+            <TrilogyCard key={item.number} item={item} index={i} accent={colorAccents[i]} />
+          ))}
         </div>
 
         {/* Bottom quote */}
-        <AnimatedCard delay={600}>
-          <div className="max-w-3xl mx-auto text-center mt-20">
-            <blockquote className="font-quote italic text-xl sm:text-2xl text-white/40 leading-relaxed">
-              「當好主意結合好治理，自然會產生真正的好生意。這樣的好生意，才真正支撐韌性台灣、淨零台灣、進步台灣。」
-            </blockquote>
-            <cite className="block mt-4 font-body text-sm text-white/25 not-italic">
-              —— 黃育徵，循環台灣基金會
-            </cite>
-          </div>
-        </AnimatedCard>
+        <div className="mt-12 p-6 bg-white border border-pres-border border-l-4 border-l-pres-green">
+          <p className="text-sm text-pres-text leading-relaxed">
+            <strong className="text-pres-dark">「5+2」其實更接近「5&times;2」</strong>——「五」是產業升級，「二」是國家升級。循環經濟與新農業，決定的是台灣未來的能源結構、資源利用模式、產業空間布局，以及城鄉發展平衡。
+          </p>
+          <p className="text-xs text-pres-text-secondary mt-2">——黃育徵，循環台灣基金會</p>
+        </div>
       </div>
     </section>
+  );
+}
+
+function TrilogyCard({
+  item,
+  index,
+  accent,
+}: {
+  item: (typeof TRILOGY)[number];
+  index: number;
+  accent: { border: string; bg: string; text: string };
+}) {
+  const { ref, isVisible } = useScrollAnimation();
+
+  return (
+    <div
+      ref={ref}
+      className={`bg-white border border-pres-border transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+      style={{ transitionDelay: `${index * 150}ms` }}
+    >
+      <div className="p-6 sm:p-8">
+        {/* Header */}
+        <div className="flex items-start gap-4 mb-4">
+          <div className={`shrink-0 w-12 h-12 flex items-center justify-center text-lg font-black ${accent.bg} ${accent.text} border ${accent.border}`}>
+            {item.number}
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-pres-dark">{item.title}</h3>
+            <p className={`text-sm ${accent.text} font-medium`}>{item.subtitle}</p>
+          </div>
+        </div>
+
+        {/* Description */}
+        <p className="text-sm text-pres-text leading-relaxed mb-5">{item.description}</p>
+
+        {/* Traits */}
+        <div className="flex flex-wrap gap-2 mb-5">
+          {item.traits.map((trait) => (
+            <span
+              key={trait}
+              className={`text-xs px-3 py-1.5 ${accent.bg} ${accent.text} border ${accent.border}`}
+            >
+              {trait}
+            </span>
+          ))}
+        </div>
+
+        {/* Quote */}
+        <div className={`p-4 ${accent.bg} border-l-3 ${accent.border}`}>
+          <p className="text-sm text-pres-text italic">「{item.quote}」</p>
+        </div>
+      </div>
+    </div>
   );
 }

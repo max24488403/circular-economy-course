@@ -1,9 +1,9 @@
 /*
-  DESIGN: Terra Narrativa — 大地敘事
+  DESIGN: Clean Presentation Style — 簡報風格
   Home: Main landing page assembling all sections
-  Wabi-Sabi meets Nordic Minimalism
-  Color: Deep charcoal + Ivory + Forest Green + Terracotta
-  Typography: Cormorant Garamond (display) + Noto Sans TC (body)
+  White/light gray backgrounds, no background images
+  Color: Deep green + Amber + Terracotta accents on white
+  Typography: Noto Sans TC
 */
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -19,7 +19,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <HeroSection />
       <PainPointsSection />

@@ -1,74 +1,68 @@
 /*
-  DESIGN: Terra Narrativa — 大地敘事
-  Instructors: Ivory bg, elegant portrait cards
+  DESIGN: Clean Presentation Style
+  InstructorsSection: White background, simple text-based instructor cards
 */
 import { INSTRUCTORS } from "@/lib/constants";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-
-function AnimatedCard({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const { ref, isVisible } = useScrollAnimation(0.1);
-  return (
-    <div
-      ref={ref}
-      className="transition-all duration-1000 ease-out"
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(40px)",
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
+import { User } from "lucide-react";
 
 export default function InstructorsSection() {
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+
   return (
-    <section id="instructors" className="py-24 lg:py-32 bg-background">
+    <section id="instructors" className="py-20 bg-white">
       <div className="container">
-        <AnimatedCard>
-          <div className="max-w-4xl mx-auto text-center mb-20">
-            <span className="font-body text-sm tracking-[0.3em] text-terra-terracotta uppercase mb-6 block">
-              師資陣容
-            </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-terra-charcoal leading-tight mb-8">
-              跨領域<span className="text-terra-forest">頂尖師資</span>
-            </h2>
-            <p className="font-body text-lg text-terra-charcoal/50 leading-relaxed max-w-2xl mx-auto">
-              結合循環經濟思想領袖、產業轉型顧問與傳播策略專家，提供最完整的學習體驗。
-            </p>
-          </div>
-        </AnimatedCard>
+        {/* Section title */}
+        <div ref={titleRef} className={`mb-14 transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+          <p className="text-xs tracking-[0.2em] text-pres-green uppercase mb-3">師資陣容</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-pres-dark leading-tight">
+            理論深度 &times; 實戰經驗
+          </h2>
+          <p className="text-base text-pres-text-secondary mt-3 max-w-2xl">
+            結合循環經濟思想領袖與產業實務專家，提供兼具深度與可執行性的學習體驗。
+          </p>
+          <div className="w-12 h-0.5 bg-pres-green mt-6" />
+        </div>
 
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-5xl mx-auto">
+        {/* Instructor cards */}
+        <div className="grid md:grid-cols-3 gap-6">
           {INSTRUCTORS.map((instructor, i) => (
-            <AnimatedCard key={instructor.name} delay={i * 200}>
-              <div className="group text-center">
-                {/* Portrait */}
-                <div className="relative w-48 h-48 mx-auto mb-8 overflow-hidden rounded-sm">
-                  <img
-                    src={instructor.image}
-                    alt={instructor.name}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                  />
-                  <div className="absolute inset-0 bg-terra-forest/10 group-hover:bg-transparent transition-all duration-700" />
-                </div>
-
-                {/* Info */}
-                <h3 className="font-display text-xl font-semibold text-terra-charcoal mb-1">
-                  {instructor.name}
-                </h3>
-                <p className="font-body text-sm text-terra-forest tracking-wider mb-4">
-                  {instructor.title}
-                </p>
-                <p className="font-body text-sm text-terra-charcoal/50 leading-relaxed max-w-xs mx-auto">
-                  {instructor.bio}
-                </p>
-              </div>
-            </AnimatedCard>
+            <InstructorCard key={instructor.name} instructor={instructor} index={i} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function InstructorCard({
+  instructor,
+  index,
+}: {
+  instructor: (typeof INSTRUCTORS)[number];
+  index: number;
+}) {
+  const { ref, isVisible } = useScrollAnimation();
+
+  return (
+    <div
+      ref={ref}
+      className={`border border-pres-border bg-white p-6 transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+      style={{ transitionDelay: `${index * 150}ms` }}
+    >
+      {/* Avatar placeholder */}
+      <div className="w-14 h-14 bg-pres-light-gray flex items-center justify-center mb-4">
+        <User size={24} className="text-pres-text-secondary" />
+      </div>
+
+      {/* Name & title */}
+      <h3 className="text-base font-bold text-pres-dark">{instructor.name}</h3>
+      <p className="text-xs text-pres-green font-medium mt-1 mb-3">{instructor.title}</p>
+
+      {/* Bio */}
+      <p className="text-sm text-pres-text leading-relaxed">{instructor.bio}</p>
+    </div>
   );
 }

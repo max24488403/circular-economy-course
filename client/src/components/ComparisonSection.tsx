@@ -1,81 +1,69 @@
 /*
-  DESIGN: Terra Narrativa — 大地敘事
-  Comparison: Market differentiation table
+  DESIGN: Clean Presentation Style
+  ComparisonSection: Light gray background, clean comparison table
 */
 import { COMPARISON } from "@/lib/constants";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
-function AnimatedCard({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const { ref, isVisible } = useScrollAnimation(0.1);
-  return (
-    <div
-      ref={ref}
-      className="transition-all duration-1000 ease-out"
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(30px)",
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
 export default function ComparisonSection() {
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+  const { ref: tableRef, isVisible: tableVisible } = useScrollAnimation();
+
   return (
-    <section className="py-24 lg:py-32 bg-terra-charcoal relative overflow-hidden">
-      <div className="absolute inset-0 grain-overlay" />
+    <section className="py-20 bg-pres-light-gray">
+      <div className="container">
+        {/* Section title */}
+        <div ref={titleRef} className={`mb-14 transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+          <p className="text-xs tracking-[0.2em] text-pres-green uppercase mb-3">市場定位</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-pres-dark leading-tight">
+            與市場現有課程的差異化比較
+          </h2>
+          <p className="text-base text-pres-text-secondary mt-3 max-w-2xl">
+            本課程以「價值導向」取代「義務導向」，從企業經營痛點出發，而非從法規要求出發。
+          </p>
+          <div className="w-12 h-0.5 bg-pres-green mt-6" />
+        </div>
 
-      <div className="relative z-10 container">
-        <AnimatedCard>
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <span className="font-body text-sm tracking-[0.3em] text-terra-terracotta-light uppercase mb-6 block">
-              市場差異化
-            </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-6">
-              為何選擇<span className="text-terra-forest-light">這門課程？</span>
-            </h2>
-            <p className="font-body text-lg text-white/40 leading-relaxed max-w-2xl mx-auto">
-              我們不只傳遞知識，更致力於翻轉思維——從義務導向到價值導向的根本轉變。
-            </p>
+        {/* Comparison table */}
+        <div
+          ref={tableRef}
+          className={`bg-white border border-pres-border overflow-hidden transition-all duration-700 ${
+            tableVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          {/* Table header */}
+          <div className="grid grid-cols-3 border-b border-pres-border bg-pres-light-gray">
+            <div className="p-4 text-xs font-bold text-pres-text-secondary uppercase tracking-wider">
+              比較維度
+            </div>
+            <div className="p-4 text-xs font-bold text-pres-text-secondary uppercase tracking-wider border-l border-pres-border">
+              市場現有課程
+            </div>
+            <div className="p-4 text-xs font-bold text-pres-green uppercase tracking-wider border-l border-pres-border">
+              本課程
+            </div>
           </div>
-        </AnimatedCard>
 
-        <AnimatedCard delay={200}>
-          <div className="max-w-5xl mx-auto overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr>
-                  <th className="text-left p-4 lg:p-6 font-body text-sm text-white/30 tracking-wider border-b border-white/[0.06]">
-                    比較維度
-                  </th>
-                  <th className="text-left p-4 lg:p-6 font-body text-sm text-white/30 tracking-wider border-b border-white/[0.06]">
-                    市場現有課程
-                  </th>
-                  <th className="text-left p-4 lg:p-6 font-body text-sm text-terra-forest-light tracking-wider border-b border-terra-forest/20">
-                    本課程設計
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARISON.map((row, i) => (
-                  <tr key={i} className="group hover:bg-white/[0.02] transition-colors duration-300">
-                    <td className="p-4 lg:p-6 font-body text-sm font-medium text-white/70 border-b border-white/[0.04]">
-                      {row.dimension}
-                    </td>
-                    <td className="p-4 lg:p-6 font-body text-sm text-white/35 border-b border-white/[0.04]">
-                      {row.market}
-                    </td>
-                    <td className="p-4 lg:p-6 font-body text-sm text-terra-forest-light border-b border-terra-forest/10">
-                      {row.ours}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </AnimatedCard>
+          {/* Table rows */}
+          {COMPARISON.map((row, i) => (
+            <div
+              key={row.dimension}
+              className={`grid grid-cols-3 ${
+                i < COMPARISON.length - 1 ? "border-b border-pres-border" : ""
+              }`}
+            >
+              <div className="p-4 text-sm font-semibold text-pres-dark">
+                {row.dimension}
+              </div>
+              <div className="p-4 text-sm text-pres-text-secondary border-l border-pres-border">
+                {row.market}
+              </div>
+              <div className="p-4 text-sm text-pres-text border-l border-pres-border bg-pres-green-bg">
+                <strong className="text-pres-green">{row.ours}</strong>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

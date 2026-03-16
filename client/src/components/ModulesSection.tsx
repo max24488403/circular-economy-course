@@ -1,98 +1,101 @@
 /*
-  DESIGN: Terra Narrativa — 大地敘事
-  Modules: Ivory bg, clean modular layout
+  DESIGN: Clean Presentation Style
+  ModulesSection: White background, clean module cards
 */
 import { MODULES } from "@/lib/constants";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Clock, BookOpen } from "lucide-react";
 
-function AnimatedCard({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const { ref, isVisible } = useScrollAnimation(0.1);
-  return (
-    <div
-      ref={ref}
-      className="transition-all duration-1000 ease-out"
-      style={{
-        opacity: isVisible ? 1 : 0,
-        transform: isVisible ? "translateY(0)" : "translateY(40px)",
-        transitionDelay: `${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-const moduleColors = [
-  { accent: "bg-terra-forest", text: "text-terra-forest", border: "border-terra-forest/20", light: "bg-terra-forest/5" },
-  { accent: "bg-terra-terracotta", text: "text-terra-terracotta", border: "border-terra-terracotta/20", light: "bg-terra-terracotta/5" },
-  { accent: "bg-terra-amber", text: "text-terra-amber", border: "border-terra-amber/20", light: "bg-terra-amber/5" },
-  { accent: "bg-terra-charcoal", text: "text-terra-charcoal", border: "border-terra-charcoal/20", light: "bg-terra-charcoal/5" },
-];
-
 export default function ModulesSection() {
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+
   return (
-    <section id="modules" className="py-24 lg:py-32 bg-background">
+    <section id="modules" className="py-20 bg-white">
       <div className="container">
-        {/* Section header */}
-        <AnimatedCard>
-          <div className="max-w-4xl mx-auto text-center mb-20">
-            <span className="font-body text-sm tracking-[0.3em] text-terra-terracotta uppercase mb-6 block">
-              課程架構
-            </span>
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-terra-charcoal leading-tight mb-8">
-              四大核心模組<br />
-              <span className="text-terra-forest">18 小時完整學習旅程</span>
-            </h2>
-            <p className="font-body text-lg text-terra-charcoal/50 leading-relaxed max-w-2xl mx-auto">
-              從觀念翻轉到實戰演練，循序漸進地建構您的循環經濟策略能力。
-            </p>
-          </div>
-        </AnimatedCard>
+        {/* Section title */}
+        <div ref={titleRef} className={`mb-14 transition-all duration-700 ${titleVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+          <p className="text-xs tracking-[0.2em] text-pres-green uppercase mb-3">課程架構</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-pres-dark leading-tight">
+            四大核心模組 &middot; 18 小時學習旅程
+          </h2>
+          <p className="text-base text-pres-text-secondary mt-3 max-w-2xl">
+            從觀念翻轉到行動方案，每一個模組都對應企業循環轉型的關鍵階段。
+          </p>
+          <div className="w-12 h-0.5 bg-pres-green mt-6" />
+        </div>
 
         {/* Module cards */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
-          {MODULES.map((mod, i) => {
-            const color = moduleColors[i];
-            return (
-              <AnimatedCard key={mod.id} delay={i * 150}>
-                <div className={`group relative p-8 lg:p-10 border ${color.border} rounded-sm ${color.light} hover:shadow-xl transition-all duration-700 h-full`}>
-                  {/* Module ID badge */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className={`w-12 h-12 ${color.accent} rounded-sm flex items-center justify-center`}>
-                      <span className="font-display text-xl font-bold text-white">{mod.id}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <Clock size={14} className="text-terra-charcoal/30" />
-                      <span className="font-body text-sm text-terra-charcoal/40">{mod.hours} 小時</span>
-                    </div>
-                  </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          {MODULES.map((mod, i) => (
+            <ModuleCard key={mod.id} mod={mod} index={i} />
+          ))}
+        </div>
 
-                  {/* Title */}
-                  <h3 className="font-display text-xl lg:text-2xl font-bold text-terra-charcoal mb-2">
-                    {mod.title}
-                  </h3>
-                  <p className={`font-body text-sm ${color.text} tracking-wider mb-6`}>
-                    {mod.subtitle}
-                  </p>
-
-                  {/* Topics */}
-                  <div className="space-y-3">
-                    {mod.topics.map((topic, j) => (
-                      <div key={j} className="flex items-start gap-3">
-                        <BookOpen size={14} className="text-terra-charcoal/20 mt-1 shrink-0" />
-                        <span className="font-body text-sm text-terra-charcoal/60 leading-relaxed">
-                          {topic}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </AnimatedCard>
-            );
-          })}
+        {/* Total hours summary */}
+        <div className="mt-10 p-5 bg-pres-light-gray border border-pres-border flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-3">
+            <Clock size={18} className="text-pres-green" />
+            <span className="text-sm text-pres-text">
+              總計 <strong className="text-pres-dark">18 小時</strong>完整學習旅程
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <BookOpen size={18} className="text-pres-green" />
+            <span className="text-sm text-pres-text">
+              含實作演練、案例分析、行動方案制定
+            </span>
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function ModuleCard({
+  mod,
+  index,
+}: {
+  mod: (typeof MODULES)[number];
+  index: number;
+}) {
+  const { ref, isVisible } = useScrollAnimation();
+
+  return (
+    <div
+      ref={ref}
+      className={`border border-pres-border bg-white transition-all duration-700 ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      }`}
+      style={{ transitionDelay: `${index * 100}ms` }}
+    >
+      {/* Module header */}
+      <div className="p-5 border-b border-pres-border flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="w-10 h-10 flex items-center justify-center bg-pres-green text-white text-sm font-bold">
+            {mod.id}
+          </span>
+          <div>
+            <h3 className="text-base font-bold text-pres-dark">{mod.title}</h3>
+            <p className="text-xs text-pres-text-secondary">{mod.subtitle}</p>
+          </div>
+        </div>
+        <div className="text-right shrink-0">
+          <span className="text-lg font-black text-pres-green">{mod.hours}</span>
+          <span className="text-xs text-pres-text-secondary ml-1">小時</span>
+        </div>
+      </div>
+
+      {/* Topics */}
+      <div className="p-5">
+        <ul className="space-y-2.5">
+          {mod.topics.map((topic, j) => (
+            <li key={j} className="flex items-start gap-2.5 text-sm text-pres-text">
+              <span className="shrink-0 w-1.5 h-1.5 rounded-full bg-pres-green mt-2" />
+              <span className="leading-relaxed">{topic}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
